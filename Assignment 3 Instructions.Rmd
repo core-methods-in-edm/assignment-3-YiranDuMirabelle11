@@ -242,7 +242,7 @@ class(C43$cluster)
 C45$cluster <- as.factor(C45$cluster)
 
 # get the plot
-ggplot(C45, aes(question, avg, colour = cluster)) + geom_line() + xlab("Question") + ylab("Average Anwer")
+ggplot(C45, aes(question, avg, colour = cluster)) + xlab("Question") + ylab("Average Anwer")
 
 ```
 Comparing the visualization with 2 clusters and 3 clusters, we found that 2 clusters makes more sense here because the two clusters differ form each other to a great extent while if we divid students into 3 clusters we found there are clusters' answers are similar to each other and there is no need to further divide the third group. Therefore I go for 2 cluster.
@@ -305,6 +305,11 @@ C_sum$overlap <- as.factor(C_sum$overlap)
 # draw the plot based on overlapping:
 ggplot(C_cluster_c,aes(overlap)) + geom_histogram(aes(y=..count..), binwidth = 0.5)
 ggplot(C_sum,aes(x="",y=number,fill=overlap))+geom_bar(width=1, stat="identity")+coord_polar("y",start = 0)
+
+#Mosaic Plot
+library("ggmosaic")
+ggplot(data = C_cluster_c) +
+  geom_mosaic(aes(weight = 1, x=product(region, answer), fill=factor(region)), na.rm =TRUE)+   labs(x="Clustering based on Answers", title='f(Clustering on region | Clustering on Answer)') + guides(fill=guide_legend(title = "Clustering Based on Region", reverse = TRUE))
 ```
 
 From both graphs, I found that the overlapping pattern is not very clear, especially in the second graph where there is about 50% changing the groups while the rest not changing clusters. If in the first group of clusters(based on answers to the question), cluster 1 is connected to the cluster 1 in the second group of clusters, then there are 10/21 stayed in the original group. If the opposite is true where the cluster 1 in the first group is connected to cluster 2 in the second group, then 11/21 stayed in the original group. Both proportions are similar to 50%, which denotes that the two clusters are not overlapped considerably and the chances of students changing groups are close to 50%.
